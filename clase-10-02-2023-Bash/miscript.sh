@@ -1,0 +1,9 @@
+mkdir HPC_Diana
+cd ./HPC_Diana
+touch loquesea.tex
+cp loquesea.tex loquesea2.tex
+ls 
+mv loquesea2.tex loquesea3.tex
+cd ..
+cp HPC_Diana HPC_Diana2
+rm -rf HPC_Diana
