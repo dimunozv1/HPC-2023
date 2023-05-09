@@ -3,22 +3,23 @@ seq_policy := 0
 par_policy := 1
 par_unseq_policy := 2
 Narray := 200000000
+ntests := 5
 
 all: datos_seq.txt datos_par.txt datos_par_unseq.txt
 
 datos_seq.txt: parallel_metrics.o
 	for n in $(threads); do \
-		./parallel_metrics.o $(Narray) $$n $(seq_policy) >> datos_seq.txt; \
+		./parallel_metrics.o $(Narray) $$n $(seq_policy) $(ntests) >> datos_seq.txt; \
 	done
 
 datos_par.txt: parallel_metrics.o
 	for n in $(threads); do \
-		./parallel_metrics.o $(Narray) $$n $(par_policy) >> datos_par.txt; \
+		./parallel_metrics.o $(Narray) $$n $(par_policy) $(ntests) >> datos_par.txt; \
 	done
 
 datos_par_unseq.txt: parallel_metrics.o
 	for n in $(threads); do \
-		./parallel_metrics.o $(Narray) $$n $(par_unseq_policy) >> datos_par_unseq.txt; \
+		./parallel_metrics.o $(Narray) $$n $(par_unseq_policy) $(ntests) >> datos_par_unseq.txt; \
 	done
 
 parallel_metrics.o: parallel_metrics_algs.cpp
