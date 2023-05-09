@@ -7,7 +7,7 @@
 #include "tbb/task_scheduler_init.h"
 
 template<typename Func> 
-void time_function(Func func);
+void time_function(Func func, int threads);
 
 int main(int argc, char **argv) {
   int N = std::stoi(argv[1]);
@@ -22,19 +22,19 @@ int main(int argc, char **argv) {
   if(policy == 0){
     // sequential execution
     auto serial = [&myArray](){return std::accumulate(myArray.begin(), myArray.end(), 0.0);};
-    time_function(serial);
+    time_function(serial ,Nthreads);
   }
 
   else if(policy == 1){
     // parallel execution
     auto parallel = [&myArray](){return std::reduce(std::execution::par, myArray.begin(), myArray.end());};
-    time_function(parallel);
+    time_function(parallel ,Nthreads);
   }
 
   else if(policy == 2){
      // parallel execution
-     auto parallel = [&myArray](){return std::reduce(std::execution::par_unseq, myArray.begin(), myArray.end());};
-     time_function(parallel);
+     auto parallel_unseq = [&myArray](){return std::reduce(std::execution::par_unseq, myArray.begin(), myArray.end());};
+     time_function(parallel_unseq ,Nthreads);
   }
    
    else{
@@ -44,10 +44,10 @@ int main(int argc, char **argv) {
 }
 
 template<typename Func>
-void time_function(Func func) {
+void time_function(Func func, int threads) {
   auto start = std::chrono::high_resolution_clock::now();
   func();
   auto end = std::chrono::high_resolution_clock::now();
   auto duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-  std::cout << "Elapsed time: " << duration_ms/1000.0 << "  s" << std::endl;
+  std::cout << threads << "\t"  << duration_ms/1000.0  << std::endl;
 }
