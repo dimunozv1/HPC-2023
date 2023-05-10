@@ -29,10 +29,10 @@ int main(int argc, char **argv) {
   if(policy == 0){
     // sequential execution
     auto serial = [&myArray](){return std::reduce(std::execution::seq, myArray.begin(), myArray.end());};
-    std::cout << Nthreads << "\t" ;
+    std::cout << Nthreads ;
     for(int i = 0; i < ntests; i++){
        t[i] = time_function(serial);
-       std::cout << t[i] << "\t" ;
+       std::cout << "\t" << t[i]  ;
     }
      std::cout << std::endl;
   }
@@ -40,10 +40,10 @@ int main(int argc, char **argv) {
   else if(policy == 1){
     // parallel execution
     auto parallel = [&myArray](){return std::reduce(std::execution::par, myArray.begin(), myArray.end());};
-    std::cout << Nthreads << "\t" ;
+    std::cout << Nthreads ;
     for(int i = 0; i < ntests; i++){
        t[i] = time_function(parallel);
-       std::cout << t[i] << "\t" ;
+       std::cout << "\t" << t[i]  ;
     }
      std::cout << std::endl;
   }
@@ -51,10 +51,10 @@ int main(int argc, char **argv) {
   else if(policy == 2){
      // parallel execution
      auto parallel_unseq = [&myArray](){return std::reduce(std::execution::par_unseq, myArray.begin(), myArray.end());};
-     std::cout << Nthreads << "\t" ;
+     std::cout << Nthreads;
     for(int i = 0; i < ntests; i++){
        t[i] = time_function(parallel_unseq);
-       std::cout << t[i] << "\t" ;
+       std::cout << "\t" << t[i]  ;
     }
     std::cout << std::endl;
   }
